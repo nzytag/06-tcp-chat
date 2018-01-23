@@ -5,21 +5,21 @@ module.exports = function (data, clientPool, client) {
   let messageArray = message.split(' ');
 
   switch (messageArray[0]) {
-  case '/list': {
+  case '@list': {
     let list = clientPool.map(c => c.nick).join(' ');
     clientPool.filter(c => c.user === client.user).map(c => c.socket.write(`${list}`));
     break;
   }
-  case '/quit': {
+  case '@quit': {
     client.socket.end();
     break;
   }
-  case '/nick': {
+  case '@nick': {
     client.nick = messageArray[1];
     client.socket.write(`Your name is now: ${client.nick}\n`);
     break;
   }
-  case '/dm': {
+  case '@dm': {
     let nick = messageArray[1];
     clientPool.forEach(c => {
       if (c.nick === nick) {
